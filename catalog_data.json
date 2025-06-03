@@ -13,9 +13,9 @@
     ],
     "witch_hat": [
         {
-            "name": "Witch Hat #1",
-            "price": 25000,
-            "link": "https://example.com/witch-hat-1"
+            "name": "t.me/nft/WitchHat-47413",
+            "price": 100000,
+            "link": "http://t.me/nft/WitchHat-47413"
         }
     ],
     "astral_shard": [
@@ -227,13 +227,6 @@
             "name": "Spiced Wine #1",
             "price": 17000,
             "link": "https://example.com/spiced-wine-1"
-        }
-    ],
-    "jester_hat": [
-        {
-            "name": "Jester Hat #1",
-            "price": 22000,
-            "link": "https://example.com/jester-hat-1"
         }
     ],
     "ginger_cookie": [

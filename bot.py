@@ -166,10 +166,12 @@ async def enter_link(message: Message, state: FSMContext):
 
     new_gift = {"name": name, "price": price, "link": link}
     catalog.setdefault(cat_id, []).append(new_gift)
-
     save_catalog(catalog)
 
-    await message.answer(f"✅ Подарок '{name}' добавлен в категорию {category_names.get(cat_id, 'неизвестная')}!")
+    kb = InlineKeyboardBuilder()
+    kb.add(InlineKeyboardButton(text="🔙 Вернуться в каталог", callback_data="back_to_catalog"))
+
+    await message.answer(f"✅ Подарок '{name}' добавлен в категорию {category_names.get(cat_id, 'неизвестная')}!", reply_markup=kb.as_markup())
     await state.clear()
 
 @dp.message(F.text == "/remove_gift")
@@ -182,7 +184,6 @@ async def remove_gift_cmd(message: Message):
         kb.add(InlineKeyboardButton(text=cat_name, callback_data=f"rmcat:{cat_id}"))
     kb.adjust(2)
     await message.answer("Выбери категорию для удаления подарка:", reply_markup=kb.as_markup())
-
 
 @dp.callback_query(F.data.startswith("rmcat:"))
 async def remove_gift_choose(callback: CallbackQuery):
@@ -204,7 +205,6 @@ async def remove_gift_choose(callback: CallbackQuery):
         reply_markup=kb.as_markup()
     )
 
-
 @dp.callback_query(F.data.startswith("rmgift:"))
 async def remove_gift(callback: CallbackQuery):
     _, cat_id, index_str = callback.data.split(":")
@@ -212,19 +212,24 @@ async def remove_gift(callback: CallbackQuery):
 
     try:
         removed = catalog[cat_id].pop(index)
-
-        # Если после удаления категория пуста, можно удалить её из словаря (по желанию)
         if not catalog[cat_id]:
             del catalog[cat_id]
-
         save_catalog(catalog)
 
-        await callback.message.edit_text(f"✅ Подарок удалён: {removed['name']}")
+        kb = InlineKeyboardBuilder()
+        kb.add(InlineKeyboardButton(text="🔙 Вернуться в каталог", callback_data="back_to_catalog"))
+
+        await callback.message.edit_text(f"✅ Подарок удалён: {removed['name']}", reply_markup=kb.as_markup())
     except Exception as e:
         await callback.message.edit_text("❌ Не удалось удалить подарок.")
-        # Можно логировать ошибку для отладки:
-        # import logging; logging.exception(e)
 
+@dp.callback_query(F.data == "back_to_catalog")
+async def back_to_catalog(callback: CallbackQuery):
+    kb = InlineKeyboardBuilder()
+    for cat_id, name in category_names.items():
+        kb.add(InlineKeyboardButton(text=name, callback_data=f"add_cat:{cat_id}"))
+    kb.adjust(2)
+    await callback.message.edit_text("Выбери категорию:", reply_markup=kb.as_markup())
 async def main():
     print("Бот запущен!")
     await dp.start_polling(bot)
