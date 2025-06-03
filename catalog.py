@@ -1,0 +1,206 @@
+from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+
+category_names = {
+    "easter_egg": "🥚 Easter Egg",
+    "witch_hat": "🧙 Witch Hat",
+    "astral_shard": "✨ Astral Shard",
+    "toy_bear": "🧸 Toy Bear",
+    "bday_candle": "🕯️ B-Day Candle",
+    "berry_box": "🍓 Berry Box",
+    "mini_oscar": "🏆 Mini Oscar",
+    "durov_cap": "🧢 Durov's Cap",
+    "diamond_ring": "💍 Diamond Ring",
+    "magic_potion": "🧪 Magic Potion",
+    "swiss_watch": "⌚ Swiss Watch",
+    "hanging_star": "🌟 Hanging Star",
+    "loot_bag": "🎒 Loot Bag",
+    "genie_lamp": "🪔 Genie Lamp",
+    "bunny_muffin": "🧁 Bunny Muffin",
+    "signet_ring": "💠 Signet Ring",
+    "perfume_bottle": "🌸 Perfume Bottle",
+    "top_hat": "🎩 Top Hat",
+    "love_potion": "❤️‍🔥 Love Potion",
+    "plush_pepe": "🐸 Plush Pepe",
+    "precious_peach": "🍑 Precious Peach",
+    "electric_skull": "⚡💀 Electric Skull",
+    "ion_gem": "🔷 Ion Gem",
+    "snow_mitten": "🧤 Snow Mitten",
+    "desk_calendar": "📅 Desk Calendar",
+    "love_candle": "🕯️ Love Candle",
+    "cookie_heart": "🍪❤️ Cookie Heart",
+    "star_notepad": "📓⭐ Star Notepad",
+    "sakura_flower": "🌸 Sakura Flower",
+    "spiced_wine": "🍷 Spiced Wine",
+    "jester_hat": "🤡 Jester Hat",
+    "ginger_cookie": "🍪 Ginger Cookie",
+    "santa_hat": "🎅 Santa Hat",
+    "snow_globe": "🧊 Snow Globe",
+    "skull_flower": "💀🌺 Skull Flower",
+    "eternal_rose": "🌹 Eternal Rose",
+    "party_sparkler": "🎇 Party Sparkler",
+    "hypno_lollipop": "🍭 Hypno Lollipop",
+    "tama_gadget": "🎮 Tama Gadget",
+    "hex_pot": "🧿 Hex Pot",
+    "trapped_heart": "💔 Trapped Heart"
+}
+
+def get_gift_keyboard() -> InlineKeyboardMarkup:
+    items = list(category_names.items())
+
+    # Отделяем последнюю кнопку
+    last = items.pop()  # Trapped Heart
+    half = (len(items) + 1) // 2
+
+    col1 = items[:half]
+    col2 = items[half:]
+
+    keyboard = []
+
+    for i in range(len(col2)):
+        keyboard.append([
+            InlineKeyboardButton(text=col1[i][1], callback_data=col1[i][0]),
+            InlineKeyboardButton(text=col2[i][1], callback_data=col2[i][0]),
+        ])
+
+    # Если нечётное количество — добавить последнюю из col1
+    if len(col1) > len(col2):
+        keyboard.append([
+            InlineKeyboardButton(text=col1[-1][1], callback_data=col1[-1][0])
+        ])
+
+    # Последняя кнопка
+    keyboard.append([
+        InlineKeyboardButton(text=last[1], callback_data=last[0])
+    ])
+
+    return InlineKeyboardMarkup(inline_keyboard=keyboard)
+
+
+catalog = {
+    "easter_egg": [
+        {"name": "https://t.me/nft/EasterEgg-41858", "price": 100000, "link": "https://example.com/easter-egg-1"},
+        {"name": "https://t.me/nft/EasterEgg-48954", "price": 120000, "link": "https://example.com/easter-egg-2"}
+    ],
+    "witch_hat": [
+        {"name": "Witch Hat #1", "price": 25000, "link": "https://example.com/witch-hat-1"}
+    ],
+    "astral_shard": [
+        {"name": "Astral Shard #1", "price": 30000, "link": "https://example.com/astral-shard-1"}
+    ],
+    "toy_bear": [
+        {"name": "Toy Bear #1", "price": 18000, "link": "https://example.com/toy-bear-1"}
+    ],
+    "bday_candle": [
+        {"name": "B-Day Candle #1", "price": 15000, "link": "https://example.com/bday-candle-1"}
+    ],
+    "berry_box": [
+        {"name": "Berry Box #1", "price": 22000, "link": "https://example.com/berry-box-1"}
+    ],
+    "mini_oscar": [
+        {"name": "Mini Oscar #1", "price": 27000, "link": "https://example.com/mini-oscar-1"}
+    ],
+    "durov_cap": [
+        {"name": "Durov's Cap #1", "price": 32000, "link": "https://example.com/durov-cap-1"}
+    ],
+    "diamond_ring": [
+        {"name": "Diamond Ring #1", "price": 50000, "link": "https://example.com/diamond-ring-1"}
+    ],
+    "magic_potion": [
+        {"name": "Magic Potion #1", "price": 21000, "link": "https://example.com/magic-potion-1"}
+    ],
+    "swiss_watch": [
+        {"name": "Swiss Watch #1", "price": 60000, "link": "https://example.com/swiss-watch-1"}
+    ],
+    "hanging_star": [
+        {"name": "Hanging Star #1", "price": 17000, "link": "https://example.com/hanging-star-1"}
+    ],
+    "loot_bag": [
+        {"name": "Loot Bag #1", "price": 19000, "link": "https://example.com/loot-bag-1"}
+    ],
+    "genie_lamp": [
+        {"name": "Genie Lamp #1", "price": 26000, "link": "https://example.com/genie-lamp-1"}
+    ],
+    "bunny_muffin": [
+        {"name": "Bunny Muffin #1", "price": 24000, "link": "https://example.com/bunny-muffin-1"}
+    ],
+    "signet_ring": [
+        {"name": "Signet Ring #1", "price": 33000, "link": "https://example.com/signet-ring-1"}
+    ],
+    "perfume_bottle": [
+        {"name": "Perfume Bottle #1", "price": 28000, "link": "https://example.com/perfume-bottle-1"}
+    ],
+    "top_hat": [
+        {"name": "Top Hat #1", "price": 23000, "link": "https://example.com/top-hat-1"}
+    ],
+    "love_potion": [
+        {"name": "Love Potion #1", "price": 20000, "link": "https://example.com/love-potion-1"}
+    ],
+    "plush_pepe": [
+        {"name": "Plush Pepe #1", "price": 27000, "link": "https://example.com/plush-pepe-1"}
+    ],
+    "precious_peach": [
+        {"name": "Precious Peach #1", "price": 21000, "link": "https://example.com/precious-peach-1"}
+    ],
+    "electric_skull": [
+        {"name": "Electric Skull #1", "price": 29000, "link": "https://example.com/electric-skull-1"}
+    ],
+    "ion_gem": [
+        {"name": "Ion Gem #1", "price": 31000, "link": "https://example.com/ion-gem-1"}
+    ],
+    "snow_mitten": [
+        {"name": "Snow Mitten #1", "price": 16000, "link": "https://example.com/snow-mitten-1"}
+    ],
+    "desk_calendar": [
+        {"name": "https://t.me/nft/DeskCalendar-247537", "price": 60000, "link": "https://example.com/desk-calendar-1"},
+        {"name": "https://t.me/nft/DeskCalendar-70374", "price": 60000, "link": "https://example.com/desk-calendar-1"},
+        {"name": "https://t.me/nft/DeskCalendar-43802", "price": 70000, "link": "https://example.com/desk-calendar-1"}
+    ],
+    "love_candle": [
+        {"name": "Love Candle #1", "price": 15000, "link": "https://example.com/love-candle-1"}
+    ],
+    "cookie_heart": [
+        {"name": "Cookie Heart #1", "price": 13000, "link": "https://example.com/cookie-heart-1"}
+    ],
+    "star_notepad": [
+        {"name": "Star Notepad #1", "price": 12000, "link": "https://example.com/star-notepad-1"}
+    ],
+    "sakura_flower": [
+        {"name": "Sakura Flower #1", "price": 19000, "link": "https://example.com/sakura-flower-1"}
+    ],
+    "spiced_wine": [
+        {"name": "Spiced Wine #1", "price": 17000, "link": "https://example.com/spiced-wine-1"}
+    ],
+    "jester_hat": [
+        {"name": "Jester Hat #1", "price": 22000, "link": "https://example.com/jester-hat-1"}
+    ],
+    "ginger_cookie": [
+        {"name": "Ginger Cookie #1", "price": 10000, "link": "https://example.com/ginger-cookie-1"}
+    ],
+    "santa_hat": [
+        {"name": "Santa Hat #1", "price": 18000, "link": "https://example.com/santa-hat-1"}
+    ],
+    "snow_globe": [
+        {"name": "Snow Globe #1", "price": 20000, "link": "https://example.com/snow-globe-1"}
+    ],
+    "skull_flower": [
+        {"name": "Skull Flower #1", "price": 26000, "link": "https://example.com/skull-flower-1"}
+    ],
+    "eternal_rose": [
+        {"name": "Eternal Rose #1", "price": 30000, "link": "https://example.com/eternal-rose-1"}
+    ],
+    "party_sparkler": [
+        {"name": "Party Sparkler #1", "price": 17000, "link": "https://example.com/party-sparkler-1"}
+    ],
+    "hypno_lollipop": [
+        {"name": "Hypno Lollipop #1", "price": 16000, "link": "https://example.com/hypno-lollipop-1"}
+    ],
+    "tama_gadget": [
+        {"name": "Tama Gadget #1", "price": 27000, "link": "https://example.com/tama-gadget-1"}
+    ],
+    "hex_pot": [
+        {"name": "Hex Pot #1", "price": 25000, "link": "https://example.com/hex-pot-1"}
+    ],
+    "trapped_heart": [
+        {"name": "Trapped Heart #1", "price": 100000, "link": "https://example.com/trapped-heart-1"}
+    ]
+}
